@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Air Canvas</title>
+    <meta name="description" content="Draw in mid-air with your hands. Real-time hand tracking and gesture control, running entirely in your browser." />
+    <meta name="theme-color" content="#0B1530" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B1530'/%3E%3Cpath d='M8 21c4-9 7-11 9-7s4 4 7-5' stroke='%23FF6B5B' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <main id="stage">
+      <video id="video" playsinline muted></video>
+      <div class="tint"></div>
+      <canvas id="ink"></canvas>
+      <canvas id="overlay"></canvas>
+    </main>
+
+    <header class="hud hud-top">
+      <div class="brand"><span class="prompt">~/</span>air-canvas<span class="caret"></span></div>
+      <div class="pill" id="status">
+        <span class="dot"></span><span id="status-text">camera off</span><span id="fps" class="muted"></span>
+      </div>
+    </header>
+
+    <footer class="hud hud-bottom">
+      <div class="pill tool">
+        <span class="swatch" id="swatch"></span><span id="tool-name">coral pen</span>
+      </div>
+      <nav class="actions" aria-label="Canvas actions">
+        <button type="button" data-action="undo" title="Undo (Z)">undo</button>
+        <button type="button" data-action="clear" title="Clear (C)">clear</button>
+        <button type="button" data-action="save" title="Save PNG (S)">save</button>
+        <button type="button" data-action="help" title="Gestures (?)" aria-label="Show gestures">?</button>
+      </nav>
+    </footer>
+
+    <aside id="help" class="panel" hidden>
+      <div class="panel-head">
+        <h2>gestures</h2>
+        <button type="button" data-action="help" aria-label="Close">esc</button>
+      </div>
+      <ul class="legend" data-legend></ul>
+      <h2>keys</h2>
+      <ul class="keys">
+        <li><kbd>Z</kbd> undo</li>
+        <li><kbd>C</kbd> clear</li>
+        <li><kbd>S</kbd> save</li>
+        <li><kbd>E</kbd> eraser</li>
+        <li><kbd>1</kbd>–<kbd>6</kbd> colour</li>
+        <li><kbd>[</kbd> <kbd>]</kbd> thickness</li>
+        <li><kbd>H</kbd> swap hands</li>
+        <li><kbd>K</kbd> skeleton</li>
+        <li><kbd>V</kbd> camera feed</li>
+      </ul>
+    </aside>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <section id="start" class="start">
+      <div class="start-card">
+        <p class="eyebrow"><span class="prompt">~/</span>air-canvas</p>
+        <h1>Draw in mid&#8209;air.</h1>
+        <p class="lede">
+          Your webcam tracks 21 points on each hand, and gestures become tools. One hand draws, the other picks colours,
+          erases and saves. It all runs on your device - no video leaves the browser.
+        </p>
+
+        <ul class="legend" data-legend></ul>
+
+        <div class="row">
+          <span class="label">drawing hand</span>
+          <div class="segmented" role="radiogroup" aria-label="Drawing hand">
+            <button type="button" role="radio" data-hand="Left">left</button>
+            <button type="button" role="radio" data-hand="Right">right</button>
+          </div>
+        </div>
+
+        <div class="row cta">
+          <button type="button" id="start-btn" class="primary" disabled>loading hand model…</button>
+          <button type="button" id="mouse-btn" class="link">or draw with a mouse</button>
+        </div>
+        <p id="start-error" class="error" hidden></p>
+        <p class="credit">built by <a href="https://dylanlewis.au" target="_blank" rel="noopener">dylan lewis</a><span id="source-link"></span></p>
+      </div>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

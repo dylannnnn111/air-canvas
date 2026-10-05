@@ -1,0 +1,6 @@
+node_modules
+dist
+.DS_Store
+# Fetched by scripts/fetch-assets.mjs
+public/mediapipe
+public/models
